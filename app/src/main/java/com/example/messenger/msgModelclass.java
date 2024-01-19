@@ -44,14 +44,24 @@ package com.example.messenger;
 
 
 public class msgModelclass {
+    String messageId;
     String message;
     String senderid;
     long timeStamp;
 
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
+    }
+
     public msgModelclass() {
     }
 
-    public msgModelclass(String message, String senderid, long timeStamp) {
+    public msgModelclass(String messageId,String message, String senderid, long timeStamp) {
+        this.messageId = messageId;
         this.message = message;
         this.senderid = senderid;
         this.timeStamp = timeStamp;

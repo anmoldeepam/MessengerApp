@@ -31,7 +31,7 @@ import java.util.Date;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class chatwindo extends AppCompatActivity {
-    String reciverimg, reciverUid,reciverName,SenderUID;
+    String reciverimg, reciverUid,reciverName,SenderUID, messageId;
     CircleImageView profile;
     TextView reciverNName;
     FirebaseDatabase database;
@@ -56,6 +56,7 @@ public class chatwindo extends AppCompatActivity {
         reciverName = getIntent().getStringExtra("nameeee");
         reciverimg = getIntent().getStringExtra("reciverImg");
         reciverUid = getIntent().getStringExtra("uid");
+
 
         messagesArrayList = new ArrayList<>();
 
@@ -124,7 +125,7 @@ public class chatwindo extends AppCompatActivity {
                 }
                 textmsg.setText("");
                 Date date = new Date();
-                msgModelclass messagess = new msgModelclass(message,SenderUID,date.getTime());
+                msgModelclass messagess = new msgModelclass(messageId,message,SenderUID,date.getTime());
 
                 database=FirebaseDatabase.getInstance();
                 database.getReference().child("chats")

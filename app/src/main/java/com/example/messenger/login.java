@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class login extends AppCompatActivity {
     TextView logsignup;
+    TextView logbutton;
     Button button;
     EditText email, password;
     FirebaseAuth auth;
@@ -39,7 +40,7 @@ public class login extends AppCompatActivity {
         progressDialog.setCancelable(false);
     //    getSupportActionBar().hide();
         auth = FirebaseAuth.getInstance();
-        button = findViewById(R.id.logbutton);
+        logbutton = findViewById(R.id.logbutton);
         email = findViewById(R.id.editTexLogEmail);
         password = findViewById(R.id.editTextLogPassword);
         logsignup = findViewById(R.id.logsignup);
@@ -54,11 +55,13 @@ public class login extends AppCompatActivity {
         });
 
 
-        button.setOnClickListener(new View.OnClickListener() {
+        logbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String Email = email.getText().toString();
                 String pass = password.getText().toString();
+
+
 
                 if ((TextUtils.isEmpty(Email))){
                     progressDialog.dismiss();
@@ -75,8 +78,12 @@ public class login extends AppCompatActivity {
                     Toast.makeText(login.this, "Password Needs To Be Longer Then Six Characters", Toast.LENGTH_SHORT).show();
                 }else {
                     auth.signInWithEmailAndPassword(Email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            Toast.makeText(login.this, "Clicked", Toast.LENGTH_SHORT).show();
+                            System.out.println(task.isSuccessful());
                             if (task.isSuccessful()){
                                 progressDialog.show();
                                 try {
