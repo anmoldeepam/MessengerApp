@@ -28,7 +28,24 @@
         android:layout_toRightOf="@id/pro"
         android:fontFamily="@font/poppins_regular"
         android:padding="@dimen/_7sdp"
-        android:text="Techcoder"
+        android:text="Message"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/timestrap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_50sdp"
+        android:layout_marginLeft="113dp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@drawable/reciver_shape"
+        android:layout_toRightOf="@id/pro"
+        android:fontFamily="@font/poppins_regular"
+        android:padding="@dimen/_7sdp"
+        android:text="Time"
         android:textColor="@color/black"
         android:textStyle="bold" />
 

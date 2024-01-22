@@ -31,8 +31,11 @@
     import com.google.firebase.storage.StorageReference;
     import com.squareup.picasso.Picasso;
 
+    import java.text.SimpleDateFormat;
     import java.util.ArrayList;
+    import java.util.Date;
     import java.util.HashMap;
+    import java.util.Locale;
     import java.util.Map;
 
     import de.hdodenhof.circleimageview.CircleImageView;
@@ -153,14 +156,30 @@
             });
             if (holder.getClass()==senderVierwHolder.class){
                 senderVierwHolder viewHolder = (senderVierwHolder) holder;
-                viewHolder.msgtxt.setText(messages.getMessage());
+                String formattedDate = formatDate(messages.getTimeStamp());
+                viewHolder.msgtxt.setText(formattedDate);
+                viewHolder.timestp.setText(messages.getMessage());
                 Picasso.get().load(senderImg).into(viewHolder.circleImageView);
             }else { reciverViewHolder viewHolder = (reciverViewHolder) holder;
-                viewHolder.msgtxt.setText(messages.getMessage());
+
+                String formattedDate = formatDate(messages.getTimeStamp());
+                viewHolder.msgtxt.setText(formattedDate);
+                viewHolder.timestp.setText(messages.getMessage());
+                Log.d("Timestamp", "Sender Timestamp: " + messages.getMessage()+"hello");
                 Picasso.get().load(reciverIImg).into(viewHolder.circleImageView);
 
 
             }
+        }
+
+        private String formatDate(long timestamp) {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            Date date = new Date(timestamp);
+            String formattedTime = sdf.format(date);
+
+            // Log the formatted timestamp
+            Log.d("FormattedTime", "Formatted Time: " + formattedTime);
+            return formattedTime;
         }
 
         private static void deleteMessage(String chatId, String messageId) {
@@ -188,21 +207,23 @@
 
         class  senderVierwHolder extends RecyclerView.ViewHolder {
             CircleImageView circleImageView;
-            TextView msgtxt;
+            TextView msgtxt,timestp;
             public senderVierwHolder(@NonNull View itemView) {
                 super(itemView);
                 circleImageView = itemView.findViewById(R.id.profilerggg);
                 msgtxt = itemView.findViewById(R.id.msgsendertyp);
+                timestp = itemView.findViewById(R.id.timestrap);
 
             }
         }
         class reciverViewHolder extends RecyclerView.ViewHolder {
             CircleImageView circleImageView;
-            TextView msgtxt;
+            TextView msgtxt,timestp;
             public reciverViewHolder(@NonNull View itemView) {
                 super(itemView);
                 circleImageView = itemView.findViewById(R.id.pro);
                 msgtxt = itemView.findViewById(R.id.recivertextset);
+                timestp = itemView.findViewById(R.id.timestrap);
             }
         }
     }

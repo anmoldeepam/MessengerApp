@@ -41,7 +41,7 @@
         android:layout_height="41dp"
         android:fontFamily="@font/poppins_regular"
         android:gravity="center"
-        android:text="Sign in to continue."
+        android:text="Anmoldeep 1453520"
         android:textColor="@color/black"
         android:textSize="@dimen/_14sdp"
         android:textStyle="bold"

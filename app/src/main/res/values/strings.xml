@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Messenger</string>
+    <string name="timestamp_placeholder">%s</string>
 </resources>

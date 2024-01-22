@@ -83,7 +83,7 @@ public class login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             Toast.makeText(login.this, "Clicked", Toast.LENGTH_SHORT).show();
-                            System.out.println(task.isSuccessful());
+                            Log.d("HEREE","yes");
                             if (task.isSuccessful()){
                                 progressDialog.show();
                                 try {
