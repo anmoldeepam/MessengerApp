@@ -68,8 +68,7 @@ public class chatwindo extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         messageAdpter.setLayoutManager(linearLayoutManager);
-        mmessagesAdpter = new messagesAdpter(chatwindo.this,messagesArrayList);
-        messageAdpter.setAdapter(mmessagesAdpter);
+
 
 
         Picasso.get().load(reciverimg).into(profile);
@@ -79,6 +78,9 @@ public class chatwindo extends AppCompatActivity {
 
         senderRoom = SenderUID+reciverUid;
         reciverRoom = reciverUid+SenderUID;
+
+        mmessagesAdpter = new messagesAdpter(chatwindo.this,messagesArrayList,senderRoom);
+        messageAdpter.setAdapter(mmessagesAdpter);
 
 
 
