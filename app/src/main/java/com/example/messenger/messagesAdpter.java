@@ -11,7 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,7 +71,7 @@ public class messagesAdpter extends RecyclerView.Adapter {
             public boolean onLongClick(View view) {
                 new AlertDialog.Builder(context).setTitle("Delete")
                         .setMessage("Are you sure you want to delete this message?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -107,11 +111,37 @@ public class messagesAdpter extends RecyclerView.Adapter {
                                     }
                                 });
                             }
-                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
+                        }).setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            DatabaseReference
+                                    chatRef = FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child("messages");
+                            Log.d("DatabaseREFF",chatRef.toString());
+
+                            chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                                        String messageUID = messageSnapshot.getKey();
+                                        DatabaseReference messageRef = chatRef.child(messageUID);
+                                        Log.d("DatabaseREFF",messageRef.toString());
+                                        dialougeAlertForEdit(messageRef,position);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    // Handle error
+                                }
+                            });
+
+
+                        }
+                        }).setNeutralButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                         }
                         }).show();
 
                 return false;
@@ -131,6 +161,48 @@ public class messagesAdpter extends RecyclerView.Adapter {
 
 
         }
+    }
+
+    private void dialougeAlertForEdit(DatabaseReference messageRef,int position) {
+        Log.d("abc", "dialougeAlertForEdit: DONE");
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context)
+                .setMessage("Edit Message");
+        final EditText editMsgTxt = new EditText(context);
+        editMsgTxt.setHint("Edit Msg");
+        Log.d("abc", messagesAdpterArrayList.get(position).getMessage());
+        editMsgTxt.setText(messagesAdpterArrayList.get(position).getMessage());
+        editMsgTxt.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        editMsgTxt.setLayoutParams(layoutParams);
+        dialog.setView(editMsgTxt);
+        dialog.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String editedMessage = editMsgTxt.getText().toString(); // Get the text from the EditText
+                        messageRef.child("message").setValue(editedMessage)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("MessageDelete","message Edited ");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("MessageDelete","Failed to update ");                                    }
+                                });
+                    }
+                })
+                .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+
+
     }
     private String formatDate(long timestamp) {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
