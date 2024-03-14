@@ -83,8 +83,28 @@
                 android:textColor="@color/black"
                 android:paddingStart="13.00dp" />
 
+
+
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sendImagebtn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_25sdp">
+
+
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="17dp"
+                android:layout_gravity="center"
+                android:background="@drawable/cameraone" />
+
+        </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:id="@+id/sendbtnn"
             android:layout_width="@dimen/_35sdp"
@@ -94,9 +114,11 @@
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_25sdp">
 
+
+
             <ImageView
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
+                android:layout_width="24dp"
+                android:layout_height="17dp"
                 android:layout_gravity="center"
                 android:background="@drawable/sendbut" />
 
